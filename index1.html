@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" href="media/favicon(1).ico" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Forecast</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <h1>Väder för olika städer</h1>
+
+    <!-- sökrutan och knappen-->
+    <input type="text" id="cityInput" placeholder="Välj stad">
+    <button onclick="fetchWeather()">Sök</button>
+
+    <h1>Dagens väder</h1>
+    <div id="temperature"></div>
+    <div id="todayDate"></div>
+    <div id="sun"></div>
+    <div id="relHum"></div>
+    <div id="prec"></div>
+    <div id="rain"></div>
+    <div id="showers"></div>
+    <div id="wind"></div>
+    <!--
+    <div class="container">
+        <div class="title-bar">Weather Forecast</div>
+        <div class="search-container">
+            <div class="search-bar">
+                <input type="text" id="city-input" placeholder="Enter a city">
+                <button class="search-btn">Search</button>
+            </div>
+            <div class="weather-container" class="weather-container"> -->
+    </div>
+    </div>
+    </div>
+    <!-- javascriptkoden laddas efter html innehållet är klart så fetchweather inte returnerar undefined-->
+    <script src="script.js" defer></script>
+</body>
+
+</html>
