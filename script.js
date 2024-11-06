@@ -81,5 +81,4 @@ function viewWeather(data) {
 
   // vindriktning och vindhastighet visas för aktuell timme
   wind.innerHTML = `${data.hourly.wind_direction_10m[hour]}°, ${data.hourly.wind_speed_10m[hour]} m/s`;
-  console.log(data.hourly.wind_direction_10m[hour]);
 }
