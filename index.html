@@ -10,38 +10,42 @@
 </head>
 
 <body id="body">
-    <h1>Väder för olika städer</h1>
+    <main>
+        <h1 id="cityName">Stockholm</h1>
 
-    <!-- sökrutan och knappen-->
-    <input type="text" id="cityInput" placeholder="Välj stad">
-    <button onclick="fetchWeather()">Sök</button>
+        <!-- sökrutan och knappen-->
+        <section id="search">
+            <form>
+                <input type="text" id="cityInput" placeholder="Välj stad"
+                    aria-label="Skriv in staden du vill se vädret på">
+                <button type="button" onclick="fetchWeather()">Sök</button>
+            </form>
+        </section>
 
-    <h1>Dagens väder</h1>
-    <div id="temperature"></div>
-    <div id="todayDate"></div>
-    <div id="sun"></div>
-    <div id="relHum"></div>
-    <div id="prec"></div>
-    <div id="rain"></div>
-    <div id="showers"></div>
-    <div id="wind"></div>
-
-    <!-- väder-ikonen -->
-    <div id="weatherIcon">
-        <img id="icon" src="" alt="Weather Icon" />
-    </div>
-    <!--
-    <div class="container">
-        <div class="title-bar">Weather Forecast</div>
-        <div class="search-container">
-            <div class="search-bar">
-                <input type="text" id="city-input" placeholder="Enter a city">
-                <button class="search-btn">Search</button>
+        <section id="weatherDetails">
+            <h2>Dagens väder</h2>
+            <article id="weatherData">
+                <p id="temperature"></p>
+                <p id="todayDate"></p>
+                <p id="sun"></p>
+                <p id="relHum"></p>
+                <p id="prec"></p>
+                <p id="rain"></p>
+                <p id="showers"></p>
+                <p id="wind"></p>
+            </article>
+            <!-- väder-ikonen -->
+            <div id="weatherIcon">
+                <img id="icon" src="" alt="Weather Icon" />
             </div>
-            <div class="weather-container" class="weather-container"> -->
-    </div>
-    </div>
-    </div>
+            <!--lägg in weathercode grej här -->
+            <p id="weatherDescription">
+                </div>
+        </section>
+        </div>
+        </div>
+        </div>
+    </main>
     <!-- javascriptkoden laddas efter html innehållet är klart så fetchweather inte returnerar undefined-->
     <script src="script.js" defer></script>
 </body>

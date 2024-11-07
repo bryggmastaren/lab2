@@ -1,0 +1,40 @@
+/* *{} */
+
+p {
+  font-size: 1.2rem;
+}
+/* väderikonerna */
+#icon {
+  max-width: 50px;
+  max-height: 50px;
+  padding: 1vh;
+}
+
+#body {
+  margin-top: 2vh;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* central piece */ /* implementera på bilder på flow sen om du har tid*/
+main {
+  display: flex;
+  flex-direction: column;
+  width: 30wv;
+  height: 80vh;
+  justify-content: center;
+  align-items: center;
+}
+
+#weatherDetails {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+h2 {
+  margin: 3rem 0rem;
+}
+#weatherData div {
+  margin: 1.2rem 0rem; /* padding mellan weatherdata divsen */
+}
