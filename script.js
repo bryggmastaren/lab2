@@ -1,8 +1,8 @@
 // alternativ för fetchen (GET behövs för att vi ska hämta data)
 const options = { method: "GET" };
 
-// target diven med id "temperature" (id används bara en gång per element så funkar bra med getElementById)
-const temperature = document.getElementById("temperature");
+// target diven med id "temp" (id används bara en gång per element så funkar bra med getElementById)
+const temp = document.getElementById("temp");
 const todayDate = document.getElementById("todayDate");
 const sun = document.getElementById("sun");
 const relHum = document.getElementById("relHum");
@@ -15,16 +15,23 @@ const wind = document.getElementById("wind");
 const hour = new Date().getHours(); // timmen vi hämtar data för, t.ex. om kl är 14 så är hour = 14
 
 document.addEventListener("DOMContentLoaded", function () {
-  const defaultCity = "Stockholm"; // Standardstad
-  document.getElementById("cityInput").value = defaultCity; // Sätt värdet i inputfältet till Stockholm
-
-  fetchWeather(); // Anropa din väderhämtande funktion
+  const initialCity = "Stockholm"; // Standardstad
+  document.getElementById("cityInput").value = initialCity; // sätt värdet till Stockholm som default
+  fetchWeather(initialCity); // fetchar Stockholm i detta fall
+  document
+    .getElementById("search")
+    .addEventListener("submit", function (event) {
+      // lyssnar efter submit, triggas av 'enter' eller klick
+      event.preventDefault(); // default med form är att sidan reloadas om man trycker enter. Tar bort detta
+      fetchWeather(); // anropar fetchweather igen baserat på användarens input
+    });
 });
 
 // funktion som körs när man klickar på "Sök"-knappen
-function fetchWeather() {
+function fetchWeather(initialCity) {
   // hämtar stadens namn som användaren skrivit in i inputfältet
-  const city = document.getElementById("cityInput").value;
+  const city = initialCity || document.getElementById("cityInput").value;
+
   // om ingen stad matas in, avsluta funktionen
   if (!city) {
     return;
@@ -37,6 +44,8 @@ function fetchWeather() {
 
   // uppdaterar stadens namn på sidan, men med stor bokstav först och resten lowercase. Detta behöver ej matas in i api och hålla på cus it doesnt make any difference
   document.getElementById("cityName").innerHTML = uppercaseCity;
+
+  document.getElementById("cityInput").value = ""; //gör att sökrutan reset:ar efter man sökt på stad
 
   // anropar Open Meteo geokodnings-API för att få latitud och longitud för staden
   fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${city}&count=1`)
@@ -78,8 +87,7 @@ function viewWeather(data) {
   console.log(data); // loggar allt för att se datan och dess keys
 
   // tempen för aktuell timme visas, och apparent temp visas så användaren ser det som känns
-  temperature.innerHTML =
-    "temp nu  " + data.hourly.apparent_temperature[hour] + "&deg;C";
+  temp.innerHTML = data.hourly.apparent_temperature[hour] + "&deg;C";
 
   // dagens datum skrivs ut (vi använder arrayens första värde eftersom vi bara hämtat en dags data)
   todayDate.innerHTML = data.daily.time[0];

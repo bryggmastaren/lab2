@@ -7,40 +7,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather Forecast</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Oxygen:wght@300;400;700&display=swap"
+        rel="stylesheet">
 </head>
 
+<!-- lägger id på body så vi kan target med getelementbyid i js-koden-->
+
 <body id="body">
-    <main>
-        <h1 id="cityName">Stockholm</h1>
+    <main id="main-container">
+        <h1 id="cityName"></h1>
+        <p id="todayDate"></p>
 
         <!-- sökrutan och knappen-->
         <section id="search">
             <form>
-                <input type="text" id="cityInput" placeholder="Välj stad"
+                <input type="text" id="cityInput" placeholder=" Välj stad"
                     aria-label="Skriv in staden du vill se vädret på">
-                <button type="button" onclick="fetchWeather()">Sök</button>
+                <button class="button" type="button" onclick="fetchWeather()">Sök</button>
             </form>
         </section>
 
         <section id="weatherDetails">
-            <h2>Dagens väder</h2>
-            <article id="weatherData">
-                <p id="temperature"></p>
-                <p id="todayDate"></p>
-                <p id="sun"></p>
-                <p id="relHum"></p>
-                <p id="prec"></p>
-                <p id="rain"></p>
-                <p id="showers"></p>
-                <p id="wind"></p>
-            </article>
-            <!-- väder-ikonen -->
+
+            <!--lägg in weathercode grej här -->
+            <p id="temp"></p>
             <div id="weatherIcon">
                 <img id="icon" src="" alt="Weather Icon" />
             </div>
-            <!--lägg in weathercode grej här -->
             <p id="weatherDescription">
-                </div>
+            </p>
+            <p id="sun"></p>
+            <p id="relHum"></p>
+            <p id="prec"></p>
+            <p id="rain"></p>
+            <p id="showers"></p>
+            <p id="wind"></p>
+
+            <!-- väder-ikonen -->
         </section>
         </div>
         </div>
