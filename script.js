@@ -4,6 +4,7 @@ const options = { method: "GET" };
 // target diven med id "temp" (id används bara en gång per element så funkar bra med getElementById)
 const temp = document.getElementById("temp");
 const todayDate = document.getElementById("todayDate");
+const weatherHours = document.getElementById("weatherHours");
 const sun = document.getElementById("sun");
 const relHum = document.getElementById("relHum");
 const prec = document.getElementById("prec");
@@ -50,8 +51,11 @@ function fetchWeather(initialCity) {
   // anropar Open Meteo geokodnings-API för att få latitud och longitud för staden
   fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${city}&count=1`)
     .then((response) => {
-      // om vi får fel, kasta ett felmeddelande, annars omvandla till json
-      if (!response.ok) throw new Error("Kunde inte hitta staden");
+      // om vi får fel av responsen, skicka ett felmeddelande, annars omvandla till json
+      if (!response.ok)
+        throw new Error(
+          "Something went wrong. Please check the city name or try again later."
+        );
       return response.json(); // omvandlar svaret till json-format
     })
     .then((data) => {
@@ -60,7 +64,7 @@ function fetchWeather(initialCity) {
         const { latitude, longitude } = data.results[0]; // får koordinater för staden
         getWeatherData(latitude, longitude); // skickar dessa till funktionen för att hämta väder
       } else {
-        alert("Staden kunde inte hittas."); // meddelande om ingen stad hittas
+        alert("City could not be found."); // meddelande om ingen stad hittas
       }
     })
     .catch((err) => console.error("Geocoding error:", err)); // felmeddelande om geokodning misslyckas
@@ -95,7 +99,7 @@ function viewWeather(data) {
   // visar soluppgång och solnedgång från API-datan och använder `` för att skriva båda tiderna på en rad
   const sunriseTime = data.daily.sunrise[0].substring(11, 16); // får bara ut tiden från API-datan
   const sunsetTime = data.daily.sunset[0].substring(11, 16); // får bara ut tiden från API-datan
-  sun.innerHTML = `Solen går upp vid kl ${sunriseTime} - Och solen går ned vid kl. ${sunsetTime}`;
+  sun.innerHTML = `Sunrise by ${sunriseTime} - Sunset by ${sunsetTime}`;
 
   // visar luftfuktigheten (relativ) för den aktuella timmen
   relHum.innerHTML = `${data.hourly.relative_humidity_2m[hour]}%`;
@@ -116,7 +120,7 @@ function viewWeather(data) {
   // referens till diven som ska visa väderbeskrivningen och skriver ut den
   const weatherDescriptionElement =
     document.getElementById("weatherDescription");
-  weatherDescriptionElement.innerHTML = `Vädret just nu: ${weatherDescription}`; // skriver ut en enkel text för vädret, så användaren snabbt fattar vad som pågår
+  weatherDescriptionElement.innerHTML = `Weather right now is ${weatherDescription}`; // skriver ut en enkel text för vädret, så användaren snabbt fattar vad som pågår
 
   // Visar väderikonen (weatherIcon) baserat på väderbeskrivningen vi fått från väderkoden
   const weatherIcon = document.getElementById("icon");

@@ -6,14 +6,14 @@
   font-weight: 400;
   color: #fff;
 }
-/*
-@media only screen and (max-width: 350px) {
+
+@media only screen and (min-width: 350px) and (max-width: 800px) {
   #main-container {
-    backdrop-filter: blur(20px);
-    background: rgb(0, 0, 0, 0.15);
-    margin: 0rem 14rem;
+    width: 90%; /* Justera här för att passa innehållet */
+    max-width: 800px;
+    background-color: red;
   }
-}*/
+}
 /* fonts */
 .oxygen-light {
   font-family: "Oxygen", sans-serif;
@@ -35,16 +35,17 @@
 h1 {
   font-size: 2rem;
   position: relative;
-  padding: 3rem 0 1rem;
+  padding: 4rem 1rem 1rem;
 }
-
+h2 {
+  font-size: 40px;
+}
 p {
   font-size: 0.6rem;
 }
 /* väderikonerna */
 
 #body {
-  background-color: #498556;
   font-family: "ZtChintzy", sans-serif;
   min-height: 100vh;
   display: flex;
@@ -59,7 +60,7 @@ p {
 /* main */
 #main-container {
   backdrop-filter: blur(20px);
-  background: #498556;
+  background: radial-gradient(circle, #58a168, #33623c);
   position: relative; /* påverkar ej hur andra element flyttas */
   width: 350px;
   height: 900px;
@@ -69,6 +70,7 @@ p {
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
+  margin-top: 1rem;
 
   /* transition: height .6s ease;*/
 }
@@ -77,7 +79,7 @@ p {
 #search form {
   position: absolute; /* så form håller sig uppe till höger */
   top: 10px;
-  right: 3.4rem;
+  right: 4.4rem;
   width: 10rem;
   background-color: #2e5536;
   border-radius: 0.4rem;
@@ -91,15 +93,16 @@ p {
   background-color: #2e5536;
   outline: none;
   border: none;
-  border-radius: 0.2rem;
 }
-
+#cityInput {
+  padding-left: 0.25rem; /* på pick a city*/
+}
 #search .button {
   background-color: #1c3521;
   border: none;
   cursor: pointer;
   border-radius: 0.2rem;
-  padding: 0.5rem 1rem;
+  padding: 0.4rem 0.8rem;
 }
 
 input::placeholder {
@@ -109,14 +112,13 @@ input::placeholder {
 #icon {
   max-width: 50px;
   max-height: 50px;
-  margin: 1vh;
 }
 
 /* typ allt väder-content */
 #weatherDetails {
-  background: rgba(0, 0, 0, 0.4);
-  padding: 1rem;
-  border-radius: 1rem;
+  /*background: linear-gradient(to bottom, #549862, #33623c);
+  border-radius: 1rem;*/
+  padding: 0.5rem;
   display: flex;
   flex-direction: column; /* Vertikal kolumn */
   align-items: center;
@@ -124,73 +126,46 @@ input::placeholder {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1rem;
-  margin-top: 1rem;
-}
-
-#weatherDetails p,
-#weatherDetails #weatherIcon {
-  background-color: rgb(0, 0, 0, 0.15);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-}
-
-#weatherDescription {
-  background-color: rgba(255, 233, 39, 0.592);
-}
-
-#weatherIcon {
-  background-color: rgba(255, 233, 39, 0.592);
 }
 
 #temp,
-#weatherIcon {
-  background-color: rgb(0, 0, 0, 0.15);
+#weatherIcon,
+#weatherDescription,
+.weatherHours {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
+  grid-column: span 2; /* Gör att de sträcker sig över båda kolumnerna */
+}
+#todayDate {
+  margin-bottom: 2rem;
+  font-size: 0.8rem;
+}
+#weatherDescription {
+  font-size: 0.8rem;
 }
 
-#todayDate,
 #sun,
 #relHum,
 #prec,
 #rain,
 #showers,
-#wind {
+#wind,
+.weatherHours {
   font-size: 0.8rem;
-  background-color: rgba(255, 255, 255, 0.1);
+  background: linear-gradient(to bottom, #4f8f5d, #41774d);
   padding: 0.5rem;
   border-radius: 0.5rem;
   margin-top: 0.5rem;
 }
-
-#todayDate {
-  background-color: rgba(0, 170, 255, 0.384);
-}
-
-#sun {
-  background-color: rgba(0, 255, 38, 0.384);
-}
-
-#relHum {
-  background-color: rgba(251, 8, 255, 0.384);
-}
-
-#prec {
-  background-color: rgba(225, 255, 0, 0.384);
-}
-
-#rain {
-  background-color: rgba(102, 25, 255, 0.384);
-}
-
-#showers {
-  background-color: rgba(255, 118, 6, 0.384);
-}
-
-#wind {
-  background-color: rgba(0, 255, 119, 0.384);
+/* responsiv*/
+@media only screen and (min-width: 600px) {
+  #main-container {
+    width: 100%;
+    background-color: red !important;
+  }
+  /*
+  #weatherDetails {
+  }*/
 }

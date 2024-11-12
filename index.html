@@ -24,21 +24,22 @@
         <!-- sökrutan och knappen-->
         <section id="search">
             <form>
-                <input type="text" id="cityInput" placeholder=" Välj stad"
-                    aria-label="Skriv in staden du vill se vädret på">
-                <button class="button" type="button" onclick="fetchWeather()">Sök</button>
+                <input type="text" id="cityInput" placeholder="  Pick a city"
+                    aria-label="Enter the city name to check the weather">
+                <button class="button" type="button" onclick="fetchWeather()">Search</button>
             </form>
         </section>
 
         <section id="weatherDetails">
 
             <!--lägg in weathercode grej här -->
-            <p id="temp"></p>
+            <h2 id="temp"></h2>
             <div id="weatherIcon">
                 <img id="icon" src="" alt="Weather Icon" />
             </div>
             <p id="weatherDescription">
             </p>
+            <div class="weatherHours">Now 12 13 14 15 16 17 18 19 20 etc</div>
             <p id="sun"></p>
             <p id="relHum"></p>
             <p id="prec"></p>
