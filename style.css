@@ -7,13 +7,6 @@
   color: #fff;
 }
 
-@media only screen and (min-width: 350px) and (max-width: 800px) {
-  #main-container {
-    width: 90%; /* Justera här för att passa innehållet */
-    max-width: 800px;
-    background-color: red;
-  }
-}
 /* fonts */
 .oxygen-light {
   font-family: "Oxygen", sans-serif;
@@ -62,7 +55,7 @@ p {
   backdrop-filter: blur(20px);
   background: radial-gradient(circle, #58a168, #33623c);
   position: relative; /* påverkar ej hur andra element flyttas */
-  width: 350px;
+  width: calc(100%-20px);
   height: 900px;
   border-radius: 1rem;
   padding: 1rem;
@@ -101,7 +94,7 @@ p {
   background-color: #1c3521;
   border: none;
   cursor: pointer;
-  border-radius: 0.2rem;
+  border-radius: 0.4rem;
   padding: 0.4rem 0.8rem;
 }
 
@@ -110,16 +103,15 @@ input::placeholder {
 }
 
 #icon {
-  max-width: 50px;
-  max-height: 50px;
+  max-width: 60px;
+  max-height: 60px;
 }
 
 /* typ allt väder-content */
-#weatherDetails {
+#weatherData {
   /*background: linear-gradient(to bottom, #549862, #33623c);
   border-radius: 1rem;*/
   padding: 0.5rem;
-  display: flex;
   flex-direction: column; /* Vertikal kolumn */
   align-items: center;
   text-align: center;
@@ -128,13 +120,13 @@ input::placeholder {
   gap: 1rem;
 }
 
-#temp,
-#weatherIcon,
-#weatherDescription,
+#weatherDetails,
 .weatherHours {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 1.4rem;
   width: 100%;
   grid-column: span 2; /* Gör att de sträcker sig över båda kolumnerna */
 }
@@ -160,12 +152,124 @@ input::placeholder {
   margin-top: 0.5rem;
 }
 /* responsiv*/
-@media only screen and (min-width: 600px) {
+@media only screen and (min-width: 768px) {
   #main-container {
-    width: 100%;
-    background-color: red !important;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr; /* Three equal-width columns */
+    grid-template-rows: 1fr 1fr 1fr; /* Two rows, auto-sized based on content */
+    gap: 1rem;
+    padding: 1rem;
+    width: calc(100% - 40px); /* Keeps the padding intact */
   }
+
+  /* Creating a grid cell for cityName and todayDate to stack in */
+  #cityName,
+  #todayDate {
+    display: block; /* Stack elements vertically within the same cell */
+    margin: 0; /* Remove default margins */
+  }
+
+  #cityName {
+    text-align: center;
+    grid-column: 1 / 2; /* Place in the first column */
+    grid-row: 1; /* In the first row */
+  }
+
+  #todayDate {
+    text-align: center;
+    grid-column: 1 / 2; /* Same cell as cityName */
+    grid-row: 1; /* Same row as cityName */
+    margin-top: 0.2rem; /* Optional: Space between cityName and todayDate */
+  }
+
   /*
+  #cityName,
+  #todayDate,
+  #temp,
+  #weatherDescription,
+  #weatherIcon {
+    position: absolute;
+    top: 1rem;
+    padding: 5rem 4rem;
+  }*/
+
+  #weatherData {
+    /*background: linear-gradient(to bottom, #549862, #33623c);
+    border-radius: 1rem;*/
+    padding: 0.5rem;
+    flex-direction: column; /* Vertikal kolumn */
+    align-items: center;
+    text-align: center;
+    grid-row-start: 2;
+    grid-column-start: 3;
+    display: block;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
   #weatherDetails {
+    display: block;
+    height: 100%;
+    gap: 5rem;
+  }
+  #search form {
+    top: 1.6rem;
+    right: 6rem;
+  }
+  #search .button {
+    z-index: 10; /* så jag kan klicka på knappen igen, gick inte nyss.. */
+  }
+
+  #temp {
+    grid-area: temp;
+  }
+
+  #weatherIcon {
+    grid-area: weatherIcon;
+    text-align: center;
+  }
+
+  #weatherDescription {
+    grid-area: weatherDesc;
+    text-align: center;
+  }
+
+  .weatherHours {
+    grid-area: weatherHours;
+    text-align: center;
+  }
+
+  #sun {
+    grid-area: sun;
+  }
+
+  #relHum {
+    grid-area: relHum;
+  }
+
+  #prec {
+    grid-area: prec;
+  }
+
+  #rain {
+    grid-area: rain;
+  }
+
+  #showers {
+    grid-area: showers;
+  }
+
+  #wind {
+    grid-area: wind;
+  }
+
+  /*
+  #sun,
+  #relHum,
+  #prec,
+  #rain,
+  #showers,
+  #wind,
+  .weatherHours {
   }*/
 }

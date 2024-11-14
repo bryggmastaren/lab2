@@ -16,6 +16,7 @@ const wind = document.getElementById("wind");
 const hour = new Date().getHours(); // timmen vi hämtar data för, t.ex. om kl är 14 så är hour = 14
 
 document.addEventListener("DOMContentLoaded", function () {
+  //laddas vid starten av sidan
   const initialCity = "Stockholm"; // Standardstad
   document.getElementById("cityInput").value = initialCity; // sätt värdet till Stockholm som default
   fetchWeather(initialCity); // fetchar Stockholm i detta fall
@@ -120,7 +121,7 @@ function viewWeather(data) {
   // referens till diven som ska visa väderbeskrivningen och skriver ut den
   const weatherDescriptionElement =
     document.getElementById("weatherDescription");
-  weatherDescriptionElement.innerHTML = `Weather right now is ${weatherDescription}`; // skriver ut en enkel text för vädret, så användaren snabbt fattar vad som pågår
+  weatherDescriptionElement.innerHTML = `Weather currently: ${weatherDescription}`; // skriver ut en enkel text för vädret, så användaren snabbt fattar vad som pågår
 
   // Visar väderikonen (weatherIcon) baserat på väderbeskrivningen vi fått från väderkoden
   const weatherIcon = document.getElementById("icon");
