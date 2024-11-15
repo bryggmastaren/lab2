@@ -4,6 +4,7 @@ let defaultCity = ""; //kommer ändras nedan, drf let ist för const. Tom strän
 
 // target diven med id "temp" (id används bara en gång per element så funkar bra med getElementById)
 const temp = document.getElementById("temp");
+const appTemp = document.getElementById("appTemp");
 const todayDate = document.getElementById("todayDate");
 const weatherHours = document.getElementById("weatherHours");
 const sunrise = document.getElementById("sunrise");
@@ -114,8 +115,9 @@ function viewWeather(data) {
   console.log(data); // loggar allt för att se datan och dess keys
 
   // tempen för aktuell timme visas, och apparent temp visas så användaren ser det som känns
-  temp.innerHTML = data.hourly.apparent_temperature[hour] + "&deg;C";
-
+  temp.innerHTML = data.hourly.temperature_2m[hour] + "&deg;C";
+  appTemp.innerHTML =
+    `Feels like ${data.hourly.apparent_temperature[hour]}` + "&deg;C";
   // dagens datum skrivs ut (vi använder arrayens första värde eftersom vi bara hämtat en dags data)
   todayDate.innerHTML = data.daily.time[0];
 
@@ -125,19 +127,20 @@ function viewWeather(data) {
   sunrise.innerHTML = `Sunrise by ${sunriseTime}`;
   sunset.innerHTML = `Sunset by ${sunsetTime}`;
 
-  // visar luftfuktigheten (relativ) för den aktuella timmen
-  relHum.innerHTML = `${data.hourly.relative_humidity_2m[hour]}%`;
+  // visar relativ luftfuktigheten (relativ(?)) [hour] är aktuella timmen
+  relHum.innerHTML = `Rel. Humidity: ${data.hourly.relative_humidity_2m[hour]}%`;
 
-  // visar sannolikheten för nederbörd och dess mängd för nuvarande timme
-  prec.innerHTML = `${data.hourly.precipitation[hour]} mm, ${data.hourly.precipitation_probability[hour]}%`;
+  // visar sannolikheten för nederbörd och mängd
+  prec.innerHTML = `Precipitation: ${data.hourly.precipitation[hour]} mm, ${data.hourly.precipitation_probability[hour]}%`;
 
-  // visar mängden regn och eventuella skurar för den aktuella timmen
-  rain.innerHTML = data.hourly.rain[hour] + " mm";
-  showers.innerHTML = data.hourly.showers[hour] + " mm";
+  // visar mängden regn och eventuella skurar
+  rain.innerHTML = `Rainfall: ${data.hourly.rain[hour]} +  mm`;
+  showers.innerHTML = `Showers: ${data.hourly.showers[hour]} mm`;
 
-  // vindriktning och vindhastighet visas för aktuell timme
-  wind.innerHTML = `${data.hourly.wind_direction_10m[hour]}°, ${data.hourly.wind_speed_10m[hour]} m/s`;
-  // visar beskrivningen för vädret just nu genom att omvandla väderkoden till en beskrivande text
+  // vindriktning och vindhastighet
+  wind.innerHTML = `Wind: ${data.hourly.wind_direction_10m[hour]}°, Speed: ${data.hourly.wind_speed_10m[hour]} m/s`;
+
+  // visar beskrivningen för vädret just nu genom att göra om väderkoden till en beskrivande text
   const weatherCode = data.hourly.weather_code[hour]; // koden för vädret vid den aktuella timmen vi hämtar
   const weatherDescription = getWeatherDescription(weatherCode); // kallar på funktionen nedan för att få en beskrivning som är lite lättare att förstå för användaren
 
@@ -171,7 +174,7 @@ function viewWeather(data) {
     weatherIcon.src = "media/weatherIcons/snowy.png"; // ikon för snö
     bodyBackground.style.backgroundImage = "url('media/backgrounds/snow1.jpg')"; // bakgrund för snöväder
   } else if (weatherDescription === "Thunderstorm") {
-    weatherIcon.src = "media/weatherIcons/thunder.png"; // ikon för åska
+    weatherIcon.src = "media/weatherIcons/thunder1.jpg"; // ikon för åska
     bodyBackground.style.backgroundImage =
       "url('media/backgrounds/thunder.jpg')"; // bakgrund för åskväder
   }

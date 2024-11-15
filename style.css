@@ -34,39 +34,34 @@ h2 {
   font-size: 40px;
 }
 p {
-  font-size: 0.6rem;
+  font-size: 1.05rem;
 }
 /* väderikonerna */
 
 #body {
   font-family: "ZtChintzy", sans-serif;
-  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
   position: relative; /* så #search kan flyttas */
   background-size: cover;
+  width: calc(100% - 20px);
+  min-height: 100vh;
+  margin-top: 2rem;
+  background-repeat: no-repeat;
 }
-
-/* central piece */ /* implementera på bilder på flow sen om du har tid*/
 
 /* main */
 #main-container {
   backdrop-filter: blur(20px);
-
-  position: relative; /* påverkar ej hur andra element flyttas */
-  width: calc(100% - 20px);
-  height: 900px;
+  background-color: #54545452;
+  height: 100%;
   border-radius: 1.4rem;
   padding: 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-  margin-top: 1rem;
-
-  /* transition: height .6s ease;*/
 }
 
 /* formuläret*/
@@ -75,7 +70,7 @@ p {
   top: 10px;
   right: 4.4rem;
   width: 10rem;
-  background-color: #2e5536;
+  background-color: #383838;
   border-radius: 0.4rem;
   display: flex;
   align-items: center;
@@ -84,7 +79,7 @@ p {
 
 /* där man matar */
 #search input {
-  background-color: #2e5536;
+  background-color: #383838;
   outline: none;
   border: none;
 }
@@ -92,7 +87,7 @@ p {
   padding-left: 0.25rem; /* på pick a city*/
 }
 #search .button {
-  background-color: #1c3521;
+  background-color: #1f1f1f;
   border: none;
   cursor: pointer;
   border-radius: 0.4rem;
@@ -100,18 +95,19 @@ p {
 }
 
 input::placeholder {
-  color: #ffffffb7;
+  color: #ffffffe0;
 }
 
 #icon {
-  max-width: 60px;
-  max-height: 60px;
+  max-width: 80px;
+  max-height: 80px;
 }
 
 /* typ allt väder-content */
 #weatherData {
   /*background: linear-gradient(to bottom, #549862, #33623c);
   border-radius: 1rem;*/
+  margin-top: rem;
   padding: 0.5rem;
   flex-direction: column; /* vertikal kolumn */
   align-items: center;
@@ -119,6 +115,8 @@ input::placeholder {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1rem;
+  width: calc(100% - 40px);
+  height: calc(100% - 60px);
 }
 
 #weatherDetails,
@@ -131,13 +129,16 @@ input::placeholder {
   width: 100%;
   grid-column: span 2;
 }
+#cityName {
+  font-size: 3.2rem;
+}
 #todayDate {
   margin-bottom: 2rem;
-  font-size: 0.8rem;
+  font-size: 1rem;
   text-align: center;
 }
 #weatherDescription {
-  font-size: 0.8rem;
+  font-size: 1rem;
   text-align: center;
 }
 
@@ -148,25 +149,45 @@ input::placeholder {
 #showers,
 #wind,
 .weatherHours {
-  font-size: 0.8rem;
-  background: linear-gradient(to bottom, #4f8f5d, #41774d);
+  background: linear-gradient(to bottom, #3838381d, #ffffff36);
   padding: 0.5rem;
   border-radius: 0.5rem;
   margin-top: 0.5rem;
+  height: 100%;
+  text-align: center;
+  justify-content: center;
+  align-content: center;
 }
 
 /* REEESSSPPOOOONSIIIIV*/
 
 @media only screen and (min-width: 768px) {
   #main-container {
+    position: relative;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 20px auto 1fr; /* px först för att inte involvera grid-innehållet med sökrutan uppe till höger */
     gap: 1rem;
     padding: 1rem;
     width: calc(100% - 40px); /* håller paddingen intakt iom alltid -40px */
+    margin: 0 auto;
+    justify-self: center;
+    padding-bottom: 3rem;
+    font-size: 1.8rem;
   }
-
+  h1 {
+    font-size: 7rem !important;
+  }
+  p {
+    font-size: 1.4rem;
+  }
+  #search form {
+    top: 1.6rem;
+    right: 6rem;
+  }
+  #search .button {
+    z-index: 10; /* så jag kan klicka på knappen igen, gick inte nyss.. */
+  }
   .dateAndCity {
     grid-row: 2/3;
     grid-column: 1/2;
@@ -182,10 +203,12 @@ input::placeholder {
   #todayDate {
     text-align: center;
     margin-top: 0.3rem;
+    font-size: 2rem;
   }
   #temp {
     text-align: center;
-    font-size: 5rem;
+    font-size: 9rem;
+    margin-top: 3rem;
   }
   /*
   #cityName,
@@ -197,7 +220,12 @@ input::placeholder {
     top: 1rem;
     padding: 5rem 4rem;
   }*/
-
+  #weatherDetails {
+    grid-column: 3/4; /* hamnar på tredje kolumnen */
+    grid-row: 2/3;
+    padding-top: 2rem;
+    padding-right: 2rem;
+  }
   #weatherData {
     /*background: linear-gradient(to bottom, #549862, #33623c);
     border-radius: 1rem;*/
@@ -207,25 +235,11 @@ input::placeholder {
     grid-column: 1/ 4;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr;
-    grid-template-areas: "weatherHours weatherHours weatherHours";
-    align-items: center;
-    justify-content: center;
+    grid-template-areas:
+      "weatherHours weatherHours weatherHours"
+      "sun relHum prec"
+      "rain showers wind";
     gap: 3rem;
-  }
-
-  #weatherDetails {
-    grid-column: 3/4; /* hamnar på tredje kolumnen */
-    grid-row: 2/3;
-    padding-top: 3rem;
-    padding-right: 2rem;
-  }
-
-  #search form {
-    top: 1.6rem;
-    right: 6rem;
-  }
-  #search .button {
-    z-index: 10; /* så jag kan klicka på knappen igen, gick inte nyss.. */
   }
 
   #temp {
@@ -236,14 +250,34 @@ input::placeholder {
     text-align: center;
   }
 
-  #weatherDescription {
+  #weatherDescription,
+  #appTemp {
     text-align: center;
-    font-size: 1.2rem;
+    font-size: 1.8rem;
   }
 
   .weatherHours {
     text-align: center;
     grid-area: weatherHours;
+  }
+  #sun {
+    grid-area: sun;
+    font-size: 1.8rem;
+  }
+  #relHum {
+    grid-area: relHum;
+  }
+  #prec {
+    grid-area: prec;
+  }
+  #rain {
+    grid-area: rain;
+  }
+  #showers {
+    grid-area: showers;
+  }
+  #wind {
+    grid-area: wind;
   }
 
   #sun,
@@ -254,5 +288,11 @@ input::placeholder {
   #wind,
   .weatherHours {
     height: 8rem;
+  }
+
+  #search form {
+    transform: scale(1.5);
+    margin-right: 3.8rem;
+    margin-top: 1rem;
   }
 }
