@@ -113,7 +113,7 @@ input::placeholder {
   /*background: linear-gradient(to bottom, #549862, #33623c);
   border-radius: 1rem;*/
   padding: 0.5rem;
-  flex-direction: column; /* Vertikal kolumn */
+  flex-direction: column; /* vertikal kolumn */
   align-items: center;
   text-align: center;
   display: grid;
@@ -129,7 +129,7 @@ input::placeholder {
   align-items: center;
   gap: 1.4rem;
   width: 100%;
-  grid-column: span 2; /* Gör att de sträcker sig över båda kolumnerna */
+  grid-column: span 2;
 }
 #todayDate {
   margin-bottom: 2rem;
@@ -208,7 +208,8 @@ input::placeholder {
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr;
     grid-template-areas: "weatherHours weatherHours weatherHours";
-    text-align: center;
+    align-items: center;
+    justify-content: center;
     gap: 3rem;
   }
 
