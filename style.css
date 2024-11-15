@@ -46,6 +46,7 @@ p {
   align-items: center;
   overflow: hidden;
   position: relative; /* så #search kan flyttas */
+  background-size: cover;
 }
 
 /* central piece */ /* implementera på bilder på flow sen om du har tid*/
@@ -53,11 +54,11 @@ p {
 /* main */
 #main-container {
   backdrop-filter: blur(20px);
-  background: radial-gradient(circle, #58a168, #33623c);
+
   position: relative; /* påverkar ej hur andra element flyttas */
-  width: calc(100%-20px);
+  width: calc(100% - 20px);
   height: 900px;
-  border-radius: 1rem;
+  border-radius: 1.4rem;
   padding: 1rem;
   display: flex;
   flex-direction: column;
@@ -133,9 +134,11 @@ input::placeholder {
 #todayDate {
   margin-bottom: 2rem;
   font-size: 0.8rem;
+  text-align: center;
 }
 #weatherDescription {
   font-size: 0.8rem;
+  text-align: center;
 }
 
 #sun,
@@ -151,37 +154,39 @@ input::placeholder {
   border-radius: 0.5rem;
   margin-top: 0.5rem;
 }
-/* responsiv*/
+
+/* REEESSSPPOOOONSIIIIV*/
+
 @media only screen and (min-width: 768px) {
   #main-container {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr; /* Three equal-width columns */
-    grid-template-rows: 1fr 1fr 1fr; /* Two rows, auto-sized based on content */
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 20px auto 1fr; /* px först för att inte involvera grid-innehållet med sökrutan uppe till höger */
     gap: 1rem;
     padding: 1rem;
-    width: calc(100% - 40px); /* Keeps the padding intact */
+    width: calc(100% - 40px); /* håller paddingen intakt iom alltid -40px */
   }
 
-  /* Creating a grid cell for cityName and todayDate to stack in */
-  #cityName,
-  #todayDate {
-    display: block; /* Stack elements vertically within the same cell */
-    margin: 0; /* Remove default margins */
+  .dateAndCity {
+    grid-row: 2/3;
+    grid-column: 1/2;
+    display: flex;
+    flex-direction: column; /* datum o stad står vertikalt */
+    text-align: center;
   }
-
   #cityName {
-    text-align: center;
-    grid-column: 1 / 2; /* Place in the first column */
-    grid-row: 1; /* In the first row */
+    font-size: 3.6rem;
+    padding-left: 3rem;
+    padding-top: 0;
   }
-
   #todayDate {
     text-align: center;
-    grid-column: 1 / 2; /* Same cell as cityName */
-    grid-row: 1; /* Same row as cityName */
-    margin-top: 0.2rem; /* Optional: Space between cityName and todayDate */
+    margin-top: 0.3rem;
   }
-
+  #temp {
+    text-align: center;
+    font-size: 5rem;
+  }
   /*
   #cityName,
   #todayDate,
@@ -197,21 +202,23 @@ input::placeholder {
     /*background: linear-gradient(to bottom, #549862, #33623c);
     border-radius: 1rem;*/
     padding: 0.5rem;
-    flex-direction: column; /* Vertikal kolumn */
-    align-items: center;
+    grid-row: 3/4;
+    display: grid;
+    grid-column: 1/ 4;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-areas: "weatherHours weatherHours weatherHours";
     text-align: center;
-    grid-row-start: 2;
-    grid-column-start: 3;
-    display: block;
-    grid-template-columns: 1fr;
-    gap: 1rem;
+    gap: 3rem;
   }
 
   #weatherDetails {
-    display: block;
-    height: 100%;
-    gap: 5rem;
+    grid-column: 3/4; /* hamnar på tredje kolumnen */
+    grid-row: 2/3;
+    padding-top: 3rem;
+    padding-right: 2rem;
   }
+
   #search form {
     top: 1.6rem;
     right: 6rem;
@@ -225,45 +232,19 @@ input::placeholder {
   }
 
   #weatherIcon {
-    grid-area: weatherIcon;
     text-align: center;
   }
 
   #weatherDescription {
-    grid-area: weatherDesc;
     text-align: center;
+    font-size: 1.2rem;
   }
 
   .weatherHours {
-    grid-area: weatherHours;
     text-align: center;
+    grid-area: weatherHours;
   }
 
-  #sun {
-    grid-area: sun;
-  }
-
-  #relHum {
-    grid-area: relHum;
-  }
-
-  #prec {
-    grid-area: prec;
-  }
-
-  #rain {
-    grid-area: rain;
-  }
-
-  #showers {
-    grid-area: showers;
-  }
-
-  #wind {
-    grid-area: wind;
-  }
-
-  /*
   #sun,
   #relHum,
   #prec,
@@ -271,5 +252,6 @@ input::placeholder {
   #showers,
   #wind,
   .weatherHours {
-  }*/
+    height: 8rem;
+  }
 }

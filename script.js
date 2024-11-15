@@ -1,11 +1,13 @@
 // alternativ för fetchen (GET behövs för att vi ska hämta data)
 const options = { method: "GET" };
+let defaultCity = ""; //kommer ändras nedan, drf let ist för const. Tom sträng initiellt
 
 // target diven med id "temp" (id används bara en gång per element så funkar bra med getElementById)
 const temp = document.getElementById("temp");
 const todayDate = document.getElementById("todayDate");
 const weatherHours = document.getElementById("weatherHours");
-const sun = document.getElementById("sun");
+const sunrise = document.getElementById("sunrise");
+const sunset = document.getElementById("sunset");
 const relHum = document.getElementById("relHum");
 const prec = document.getElementById("prec");
 const rain = document.getElementById("rain");
@@ -14,12 +16,18 @@ const wind = document.getElementById("wind");
 
 // sparar aktuell timme i en variabel (för att få rätt tid i datan)
 const hour = new Date().getHours(); // timmen vi hämtar data för, t.ex. om kl är 14 så är hour = 14
+// date hämtar dagens datum, getHours hämtar timmen
 
+// DOM triggas här av addEventListener, och den prioriterar då att läsa hela HTML-dokumentet innan den läser javascriptet
+// så addEventListener lyssnar efter ett event, DOM i detta fall, och låter oss specifisera att funktionen körs efter eventet skett
 document.addEventListener("DOMContentLoaded", function () {
-  //laddas vid starten av sidan
-  const initialCity = "Stockholm"; // Standardstad
-  document.getElementById("cityInput").value = initialCity; // sätt värdet till Stockholm som default
-  fetchWeather(initialCity); // fetchar Stockholm i detta fall
+  loadFromStorage(); // kör funktionen nedan, så initiella sidan som visas kommer vara cityHistory, den du sökt på sist. Om du ej sökt på något så ?? "Stockholm" blir initial
+  console.log("Senast sökta stad", defaultCity);
+
+  // om det användaren skriver in i sökfältet finns, spara det annars är standardstaden sthlm
+  document.getElementById("cityInput").value = defaultCity;
+  fetchWeather(defaultCity); // fetchar Stockholm i detta fall pga funktionen nedan -> loadFromStorage
+
   document
     .getElementById("search")
     .addEventListener("submit", function (event) {
@@ -28,16 +36,31 @@ document.addEventListener("DOMContentLoaded", function () {
       fetchWeather(); // anropar fetchweather igen baserat på användarens input
     });
 });
+// laddar från localStorage första vi gör, fyller historiken (under DOMcontent). denna körs innan saveToStorage(searchHistory) för att det KAN finnas data i localStorage (....)
+function loadFromStorage() {
+  // hämta och visa info från storage
+  defaultCity = localStorage.getItem("cityHistory") ?? "Stockholm"; // här får jag en array med alla städer jag sökt på. för den parse
+}
+function saveToStorage(defaultCity) {
+  // när detta körs blir det en lista av arrays, så i funktionen ovan så parse till strängar för vi behöver strängar i localStorage
+  // spara från storage
 
+  localStorage.setItem("cityHistory", defaultCity);
+}
 // funktion som körs när man klickar på "Sök"-knappen
-function fetchWeather(initialCity) {
+function fetchWeather(defaultCity) {
   // hämtar stadens namn som användaren skrivit in i inputfältet
-  const city = initialCity || document.getElementById("cityInput").value;
+  const city = defaultCity || document.getElementById("cityInput").value;
 
   // om ingen stad matas in, avsluta funktionen
   if (!city) {
-    return;
+    return; //return utan något efter avbryter funktionen
   }
+
+  defaultCity = city;
+  // push lägger in city i history, då blir det en array för vi gjorde history = []
+  saveToStorage(defaultCity); //sparar historiken till storage
+
   // ok så det såg skitfult ut när jag skrev "berlin" och det returnerade liten bokstav, så fick köra en uppercase/lowercase samt slice
 
   // charAt får tag på ett tecken i strängen, här på index 0. lowercase delen får dock med sig resten av ordet, pga SLICE. kan göra m substring oxå men jag föredrog detta
@@ -83,10 +106,9 @@ function getWeatherData(latitude, longitude) {
       if (!response.ok) throw new Error("Network response was not ok");
       return response.json(); // omvandlar till json-format om allt fungerar
     })
-    .then((data) => viewWeather(data)) // omvandlar data till ett format och skickar till funktionen viewWeather
+    .then((data) => viewWeather(data)) // skickar värdet till sidan
     .catch((err) => console.error("Fetch error:", err)); // felmeddelande om hämtningen misslyckas
 }
-
 // funktion för att logga och visa väderdata vi hämtat
 function viewWeather(data) {
   console.log(data); // loggar allt för att se datan och dess keys
@@ -100,7 +122,8 @@ function viewWeather(data) {
   // visar soluppgång och solnedgång från API-datan och använder `` för att skriva båda tiderna på en rad
   const sunriseTime = data.daily.sunrise[0].substring(11, 16); // får bara ut tiden från API-datan
   const sunsetTime = data.daily.sunset[0].substring(11, 16); // får bara ut tiden från API-datan
-  sun.innerHTML = `Sunrise by ${sunriseTime} - Sunset by ${sunsetTime}`;
+  sunrise.innerHTML = `Sunrise by ${sunriseTime}`;
+  sunset.innerHTML = `Sunset by ${sunsetTime}`;
 
   // visar luftfuktigheten (relativ) för den aktuella timmen
   relHum.innerHTML = `${data.hourly.relative_humidity_2m[hour]}%`;
@@ -124,10 +147,11 @@ function viewWeather(data) {
   weatherDescriptionElement.innerHTML = `Weather currently: ${weatherDescription}`; // skriver ut en enkel text för vädret, så användaren snabbt fattar vad som pågår
 
   // Visar väderikonen (weatherIcon) baserat på väderbeskrivningen vi fått från väderkoden
+
   const weatherIcon = document.getElementById("icon");
   const bodyBackground = document.getElementById("body"); // targetar body genom id:n för att ändra hela sidans bakgrund
 
-  // samma struktur som för ikoner, fast lägger till att även bakgrundsbilden ändras
+  // så IF description är clear, visa ikonen clear. else if och -||- på resten.
   if (weatherDescription === "Clear") {
     weatherIcon.src = "media/weatherIcons/clear.png"; // ikon för klar himmel
     bodyBackground.style.backgroundImage = "url('media/backgrounds/clear.jpg')"; // bakgrund för klar himmel
@@ -135,17 +159,17 @@ function viewWeather(data) {
     weatherIcon.src = "media/weatherIcons/foggy.png"; // ikon för dimma
     bodyBackground.style.backgroundImage = "url('media/backgrounds/foggy.jpg')"; // dimmig bakgrund
   } else if (
-    weatherDescription === "Rainy" ||
+    weatherDescription === "Rainy" || // regn || eller showers
     weatherDescription === "Rain showers"
   ) {
     weatherIcon.src = "media/weatherIcons/rain.png"; // ikon för regn
-    bodyBackground.style.backgroundImage = "url('media/backgrounds/rainy.jpg')"; // bakgrund för regnigt väder
+    bodyBackground.style.backgroundImage = "url('media/backgrounds/rain.jpg')"; // bakgrund för regnigt väder
   } else if (
     weatherDescription === "Snowy" ||
     weatherDescription === "Snow showers"
   ) {
     weatherIcon.src = "media/weatherIcons/snowy.png"; // ikon för snö
-    bodyBackground.style.backgroundImage = "url('media/backgrounds/snowy.jpg')"; // bakgrund för snöväder
+    bodyBackground.style.backgroundImage = "url('media/backgrounds/snow1.jpg')"; // bakgrund för snöväder
   } else if (weatherDescription === "Thunderstorm") {
     weatherIcon.src = "media/weatherIcons/thunder.png"; // ikon för åska
     bodyBackground.style.backgroundImage =

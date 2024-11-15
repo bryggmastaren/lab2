@@ -18,8 +18,10 @@
 
 <body id="body">
     <main id="main-container">
-        <h1 id="cityName"></h1>
-        <p id="todayDate"></p>
+        <div class="dateAndCity">
+            <h1 id="cityName"></h1>
+            <p id="todayDate"></p>
+        </div>
 
         <!-- sökrutan och knappen-->
         <section id="search">
@@ -30,19 +32,23 @@
             </form>
         </section>
 
-        <section id="weatherData">
 
-            <!--lägg in weathercode grej här -->
-            <article id="weatherDetails">
-                <h2 id="temp"></h2>
-                <div id="weatherIcon">
-                    <img id="icon" src="" alt="Weather Icon" />
-                </div>
-                <p id="weatherDescription">
-                </p>
-            </article>
+
+        <!--lägg in weathercode grej här -->
+        <article id="weatherDetails">
+            <h2 id="temp"></h2>
+            <div id="weatherIcon">
+                <img id="icon" src="" alt="Weather Icon" />
+            </div>
+            <p id="weatherDescription">
+            </p>
+        </article>
+        <section id="weatherData">
             <div class="weatherHours">Now 12 13 14 15 16 17 18 19 20 21 etc</div>
-            <p id="sun"></p>
+            <div id="sun">
+                <p id="sunrise"></p>
+                <p id="sunset"></p>
+            </div>
             <p id="relHum"></p>
             <p id="prec"></p>
             <p id="rain"></p>
