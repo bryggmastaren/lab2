@@ -27,43 +27,47 @@
 }
 h1 {
   font-size: 2rem;
-  position: relative;
-  padding: 4rem 1rem 1rem;
+  padding: 3rem 1rem 1rem;
 }
 h2 {
   font-size: 40px;
 }
 p {
-  font-size: 1.05rem;
+  font-size: 0.8rem;
 }
 /* väderikonerna */
 
-#body {
+body {
   font-family: "ZtChintzy", sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-  position: relative; /* så #search kan flyttas */
   background-size: cover;
-  width: calc(100% - 20px);
+  width: 100%;
   min-height: 100vh;
-  margin-top: 2rem;
   background-repeat: no-repeat;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 /* main */
 #main-container {
   backdrop-filter: blur(20px);
-  background-color: #54545452;
-  height: 100%;
+  background-color: #373c4142;
+  height: auto;
+  max-height: 100vh;
   border-radius: 1.4rem;
   padding: 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
-
+#search a {
+  position: absolute;
+  top: 0.8rem;
+  right: 18rem;
+}
 /* formuläret*/
 #search form {
   position: absolute; /* så form håller sig uppe till höger */
@@ -83,6 +87,9 @@ p {
   outline: none;
   border: none;
 }
+.dateAndCity {
+  padding-top: 2rem;
+}
 #cityInput {
   padding-left: 0.25rem; /* på pick a city*/
 }
@@ -99,15 +106,14 @@ input::placeholder {
 }
 
 #icon {
-  max-width: 80px;
-  max-height: 80px;
+  max-width: 60px;
+  max-height: 60px;
 }
 
 /* typ allt väder-content */
 #weatherData {
   /*background: linear-gradient(to bottom, #549862, #33623c);
   border-radius: 1rem;*/
-  margin-top: rem;
   padding: 0.5rem;
   flex-direction: column; /* vertikal kolumn */
   align-items: center;
@@ -131,6 +137,7 @@ input::placeholder {
 }
 #cityName {
   font-size: 3.2rem;
+  padding: 0;
 }
 #todayDate {
   margin-bottom: 2rem;
@@ -160,8 +167,23 @@ input::placeholder {
 }
 
 /* REEESSSPPOOOONSIIIIV*/
-
+/* REEESSSPPOOOONSIIIIV*/
+@media only screen and (max-width: 900px) and (min-width: 768px) {
+  #temp {
+    font-size: 7rem !important;
+  }
+  #cityName {
+    font-size: 6rem !important;
+  }
+}
 @media only screen and (min-width: 768px) {
+  body {
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    display: flex;
+  }
+
   #main-container {
     position: relative;
     display: grid;
@@ -170,8 +192,10 @@ input::placeholder {
     gap: 1rem;
     padding: 1rem;
     width: calc(100% - 40px); /* håller paddingen intakt iom alltid -40px */
-    margin: 0 auto;
+    height: calc(100% - 40px); /* håller paddingen intakt iom alltid -40px */
+    margin: auto;
     justify-self: center;
+    align-items: center;
     padding-bottom: 3rem;
     font-size: 1.8rem;
   }
@@ -180,6 +204,11 @@ input::placeholder {
   }
   p {
     font-size: 1.4rem;
+  }
+  #search a {
+    position: absolute;
+    top: 2.2rem;
+    right: 30rem;
   }
   #search form {
     top: 1.6rem;
@@ -279,7 +308,10 @@ input::placeholder {
   #wind {
     grid-area: wind;
   }
-
+  #icon {
+    max-width: 80px;
+    max-height: 80px;
+  }
   #sun,
   #relHum,
   #prec,
